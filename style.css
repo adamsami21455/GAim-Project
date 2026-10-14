@@ -51,17 +51,20 @@ h1 {
     font-size:18px;
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
+    font-weight: 500;
     font-style: normal;
 }
-input {
+.start-screen input {
     font-size:18px;
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
+    font-weight: 800;
     font-style: normal;
+    padding: 12px;
+    border 2px solid ;
+    border-radius:6px;
 }
-button {
+.start-screen button {
     padding: 12px 25px;
     background-color: #e6242a;
     color: white;
@@ -70,7 +73,7 @@ button {
     font-size: 18px;
     font-family: "Oswald", sans-serif;
     font-optical-sizing: auto;
-    font-weight: <weight>;
+    font-weight: 1000;
     font-style: normal;
     cursor: pointer;
 }
