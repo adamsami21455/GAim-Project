@@ -11,7 +11,15 @@ console.log (startButtonEl)
 console.log (welcomeMessageEl)
 
 //functions
-
-
+function startGame () {
+    const playerName = nameInputEl.value
+    if (playerName === "") {
+        welcomeMessageEl.textContent = "Pleaes enter your Name!"
+        return;
+    }
+    else {
+        welcomeMessageEl.textContent = "Good luck " + playerName + "!"
+    }
+}
 // Event listeners
-// startButton.addEventListener('click') 
+startButton.addEventListener('click',startGame) 
