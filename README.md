@@ -8,6 +8,13 @@ This is a point and click game. You click on the targets to get a minmimum amoun
 3. JavaScript
 
 ## User Stories
+- User should be able to type their name before starting the game
+- User should be able to click on targets
+- User should be able to click and collect powerups
+- User should be able to see their lives
+- User should be able to look at the timer
+- User should be able to see score
+- User should be able to win or lose
 
 
 ## Future Enhancements
