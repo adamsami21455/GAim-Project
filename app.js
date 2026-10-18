@@ -14,6 +14,7 @@ const startScreenEl = document.querySelector('#startScreen')
 const gameScreenEl = document.querySelector('#gameScreen')
 const squaresEl = document.querySelectorAll('.sqr')
 const logoEl = document.querySelector('#logoContainer')
+const livesEl = document.querySelector('#lives')
 
 const playerGreetingEl = document.querySelector('#playerGreeting')
 const scoreDisplayEl = document.querySelector('#score')
@@ -24,9 +25,12 @@ const barrierEl = document.querySelector('#barrier')
 const timerEl = document.querySelector('#timer')
 //variables
 let score = 0
-let lives = 3
+let livesTracker = "❤️❤️❤️"
+let livesArray = ["❤️", "❤️", "❤️"]
 let barriers = 0
 let timer = 0
+
+
 
 
 
@@ -34,7 +38,8 @@ let timer = 0
 console.log(nameInputEl)
 console.log(startButtonEl)
 console.log(welcomeMessageEl)
-console.log (logoEl)
+console.log(logoEl)
+console.log(livesEl)
 console.log(startScreenEl)
 console.log(gameScreenEl)
 console.log(playerGreetingEl)
@@ -68,13 +73,13 @@ function addPoints() {
 
 }
 function randomizeTargetPosition() {
-setInterval(function randomizeTargetPosition() {
-    // find random position of target
-    const randomIndex = Math.floor((Math.random() * squaresEl.length))
-    const randomSquare = squaresEl[randomIndex]
-    // puts the target in a random square
-    randomSquare.appendChild(targetEl)
-}, 1500 )
+    setInterval(function randomizeTargetPosition() {
+        // find random position of target
+        const randomIndex = Math.floor((Math.random() * squaresEl.length))
+        const randomSquare = squaresEl[randomIndex]
+        // puts the target in a random square
+        randomSquare.appendChild(targetEl)
+    }, 1500)
 }
 
 
@@ -85,31 +90,36 @@ function gameTimer() {
         timerEl.textContent = timer
     }, 1000)
 }
-function explodingTarget() { 
-    setInterval(function explodingTarget() { 
-    const randomIndex = Math.floor((Math.random() * squaresEl.length))
-    const randomSquare = squaresEl[randomIndex]
-    // puts the target in a random square
-    randomSquare.appendChild(expTargetEl)
+function explodingTarget() {
+    setInterval(function explodingTarget() {
+        const randomIndex = Math.floor((Math.random() * squaresEl.length))
+        const randomSquare = squaresEl[randomIndex]
+        // puts the target in a random square
+        randomSquare.appendChild(expTargetEl)
     }, 1500)
 
 }
 
 
 function removeLife() {
-
-}
-function addBarrier() {
-
-}
-function loseGame() {
-    if (lives === 0 || timer === 0) {
-
+    if (livesArray.length > 0) {
+        livesArray.pop()
+        livesEl.textContent = livesArray.join("")
+        console.log(`Life lost ${livesArray}`)
     }
+    if (livesArray.length === 0 ) {
+        loseGame()
+    }
+}
+
+
+function loseGame() {
+        alert("Game Over")
 
 }
 function winGame() {
-    if (score >= 10000) {
+    if (score === 1000) {
+        alert("game won")
 
 
     }
@@ -120,6 +130,7 @@ function winGame() {
 // Event listeners
 startButton.addEventListener('click', startGame)
 target.addEventListener('click', addPoints)
+expTarget.addEventListener('click', removeLife)
 
 
 
