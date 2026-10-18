@@ -13,6 +13,7 @@ const welcomeMessageEl = document.querySelector('#welcomeMessage')
 const startScreenEl = document.querySelector('#startScreen')
 const gameScreenEl = document.querySelector('#gameScreen')
 const squaresEl = document.querySelectorAll('.sqr')
+const logoEl = document.querySelector('#logoContainer')
 
 const playerGreetingEl = document.querySelector('#playerGreeting')
 const scoreDisplayEl = document.querySelector('#score')
@@ -33,6 +34,7 @@ let timer = 0
 console.log(nameInputEl)
 console.log(startButtonEl)
 console.log(welcomeMessageEl)
+console.log (logoEl)
 console.log(startScreenEl)
 console.log(gameScreenEl)
 console.log(playerGreetingEl)
@@ -40,6 +42,7 @@ console.log(scoreDisplayEl)
 console.log(gameAreaEl)
 console.log(targetEl)
 console.log(squaresEl)
+console.log(expTargetEl)
 
 //functions
 function startGame() {
@@ -51,9 +54,12 @@ function startGame() {
     else {
         startScreenEl.style.display = "none"
         gameScreenEl.style.display = "flex"
+        logoEl.style.display = "none"
         welcomeMessageEl.textContent = "Good luck " + playerName + "!"
     }
     gameTimer()
+    randomizeTargetPosition()
+    explodingTarget()
     // a function call that laods up the exploding target
 }
 function addPoints() {
@@ -62,11 +68,13 @@ function addPoints() {
 
 }
 function randomizeTargetPosition() {
+setInterval(function randomizeTargetPosition() {
     // find random position of target
     const randomIndex = Math.floor((Math.random() * squaresEl.length))
     const randomSquare = squaresEl[randomIndex]
     // puts the target in a random square
     randomSquare.appendChild(targetEl)
+}, 1500 )
 }
 
 
@@ -77,13 +85,13 @@ function gameTimer() {
         timerEl.textContent = timer
     }, 1000)
 }
-function explodingTarget() {
-    setInterval(function targetShow() { 
+function explodingTarget() { 
+    setInterval(function explodingTarget() { 
     const randomIndex = Math.floor((Math.random() * squaresEl.length))
     const randomSquare = squaresEl[randomIndex]
     // puts the target in a random square
-    randomSquare.appendChild(explodingTarget)
-    }, 5000)
+    randomSquare.appendChild(expTargetEl)
+    }, 1500)
 
 }
 
@@ -112,7 +120,6 @@ function winGame() {
 // Event listeners
 startButton.addEventListener('click', startGame)
 target.addEventListener('click', addPoints)
-target.addEventListener('click', randomizeTargetPosition)
 
 
 
