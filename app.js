@@ -1,12 +1,12 @@
 console.log('GAim Project')
 
 // Constants
-const targetPosition = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 
-                        12, 13, 14, 15, 16, 17,
-                        18, 19, 20, 21, 22, 23,
-                        24, 25, 26, 27, 28, 29,
-                        30, 31, 32, 33, 34, 35]
-                
+const targetPosition = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
+    12, 13, 14, 15, 16, 17,
+    18, 19, 20, 21, 22, 23,
+    24, 25, 26, 27, 28, 29,
+    30, 31, 32, 33, 34, 35]
+
 const nameInputEl = document.querySelector('#playerName')
 const startButtonEl = document.querySelector('#startButton')
 const welcomeMessageEl = document.querySelector('#welcomeMessage')
@@ -18,12 +18,14 @@ const playerGreetingEl = document.querySelector('#playerGreeting')
 const scoreDisplayEl = document.querySelector('#score')
 const gameAreaEl = document.querySelector('#gameArea')
 const targetEl = document.querySelector('#target')
+const expTargetEl = document.querySelector('#expTarget')
 const barrierEl = document.querySelector('#barrier')
-
+const timerEl = document.querySelector('#timer')
 //variables
 let score = 0
 let lives = 3
 let barriers = 0
+let timer = 0
 
 
 
@@ -49,9 +51,10 @@ function startGame() {
     else {
         startScreenEl.style.display = "none"
         gameScreenEl.style.display = "flex"
-
         welcomeMessageEl.textContent = "Good luck " + playerName + "!"
     }
+    gameTimer()
+    // a function call that laods up the exploding target
 }
 function addPoints() {
     score += 100
@@ -64,19 +67,48 @@ function randomizeTargetPosition() {
     const randomSquare = squaresEl[randomIndex]
     // puts the target in a random square
     randomSquare.appendChild(targetEl)
+}
 
+
+
+function gameTimer() {
+    setInterval(function gameTimer() {
+        timer += 1
+        timerEl.textContent = timer
+    }, 1000)
+}
+function explodingTarget() {
+    setInterval(function targetShow() { 
+    const randomIndex = Math.floor((Math.random() * squaresEl.length))
+    const randomSquare = squaresEl[randomIndex]
+    // puts the target in a random square
+    randomSquare.appendChild(explodingTarget)
+    }, 5000)
 
 }
+
+
 function removeLife() {
-    
 
 }
 function addBarrier() {
 
 }
-function winGame() {
+function loseGame() {
+    if (lives === 0 || timer === 0) {
+
+    }
 
 }
+function winGame() {
+    if (score >= 10000) {
+
+
+    }
+
+}
+
+
 // Event listeners
 startButton.addEventListener('click', startGame)
 target.addEventListener('click', addPoints)

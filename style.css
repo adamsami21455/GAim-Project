@@ -61,7 +61,7 @@ h1 {
     font-weight: 800;
     font-style: normal;
     padding: 12px;
-    border 2px solid;
+    border: 2px solid;
     border-radius:6px;
 }
 
@@ -145,6 +145,21 @@ h1 {
 
 #target:hover {
     background-color: maroon;
+}
+#expTarget {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 4px solid white;
+    border-radius: 50%;
+    background-color: maroon;
+    cursor: crosshair;
+    display: none;
+
+}
+
+#expTarget:hover {
+    background-color: red;
 }
 
 #barrier {
