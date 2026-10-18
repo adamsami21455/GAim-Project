@@ -29,6 +29,7 @@ let livesTracker = "❤️❤️❤️"
 let livesArray = ["❤️", "❤️", "❤️"]
 let barriers = 0
 let timer = 0
+let gameEnded = true
 
 
 
@@ -57,6 +58,7 @@ function startGame() {
         return;
     }
     else {
+        gameEnded = false
         startScreenEl.style.display = "none"
         gameScreenEl.style.display = "flex"
         logoEl.style.display = "none"
@@ -65,11 +67,13 @@ function startGame() {
     gameTimer()
     randomizeTargetPosition()
     explodingTarget()
-    // a function call that laods up the exploding target
+    // a function call that lods up the exploding target
 }
 function addPoints() {
     score += 100
     scoreDisplayEl.textContent = score
+    
+    winGame()
 
 }
 function randomizeTargetPosition() {
@@ -106,19 +110,20 @@ function removeLife() {
         livesArray.pop()
         livesEl.textContent = livesArray.join("")
         console.log(`Life lost ${livesArray}`)
-    }
-    if (livesArray.length === 0 ) {
         loseGame()
     }
+  
 }
-
+//function (addBarrier)  {}
 
 function loseGame() {
+      if (livesArray.length === 0 || timer >= 3) {
         alert("Game Over")
-
+    
+}
 }
 function winGame() {
-    if (score === 1000) {
+    if (score >= 1000) {
         alert("game won")
 
 
