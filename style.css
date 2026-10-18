@@ -61,7 +61,7 @@ h1 {
     font-weight: 800;
     font-style: normal;
     padding: 12px;
-    border 2px solid ;
+    border 2px solid;
     border-radius:6px;
 }
 
@@ -147,3 +147,24 @@ h1 {
     background-color: maroon;
 }
 
+#barrier {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 4px solid white;
+    border-radius: 50%;
+    background-color: cyan;
+    cursor: crosshair;
+
+}
+
+#barrier:hover {
+    position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 4px solid white;
+    border-radius: 50%;
+    background-color: darkblue;
+    cursor: crosshair;
+
+}
