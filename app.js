@@ -10,6 +10,7 @@ const gameScreenEl = document.querySelector('#gameScreen')
 const squaresEl = document.querySelectorAll('.sqr')
 const logoEl = document.querySelector('#logoContainer')
 const livesEl = document.querySelector('#lives')
+const comboEl = document.querySelector('#combo')
 
 const playerGreetingEl = document.querySelector('#playerGreeting')
 const scoreDisplayEl = document.querySelector('#score')
@@ -21,6 +22,7 @@ const timerEl = document.querySelector('#timer')
 const personalBestEl = document.querySelector('#personal-best')
 //variables
 let score = 0
+let combo = 0
 let livesTracker = "❤️❤️❤️"
 let livesArray = ["❤️", "❤️", "❤️"]
 let barriers = 0
@@ -50,6 +52,7 @@ console.log(gameAreaEl)
 console.log(targetEl)
 console.log(squaresEl)
 console.log(expTargetEl)
+console.log(comboEl)
 
 //functions
 function startGame() {
@@ -91,9 +94,9 @@ function startGame() {
 }
 function addPoints() {
     score += 100
+    combo +=1
     scoreDisplayEl.textContent = score
-
-    winGame()
+    comboEl.textContent = combo
 
 }
 
@@ -103,7 +106,9 @@ function moveToRandomSquare(targetToMove) { // this function makes sure that the
     }
 
     const availableSquares = Array.from(squaresEl).filter(square => {
-        return square.children.length === 0
+        return !square.contains(targetEl) &&
+            !square.contains(expTargetEl) &&
+            !square.contains(barrierEl)
     }
     )
     if (availableSquares.length === 0) {
@@ -200,15 +205,21 @@ function loseGame() {
         if (score > personalBest){
             personalBest = score
         personalBestEl.textContent = personalBest
+        }   
+        if (livesArray.length === 0) {
+            alert (`Game Over! You lost all your lives. Score ${score}`)
         }
-
-        alert(`Game Over! Your score: ${score}`)
+        else if (score >=5000) {
+            alert(`You win! Your score: ${score}`)
+        }
+        else {alert(`Time ran out! You needed 5000 points to win. Your score: ${score}`)}
+        
         returnToStartScreen()
     }
     
 }
 function winGame() {
-    if (score >= 1000 && timer < 60 && gameEnded === false ) {
+    if (score >= 5000 && timer < 60 && gameEnded === false ) {
         gameEnded = true
         clearInterval(intervalId)
         clearInterval(targetIntervalId)

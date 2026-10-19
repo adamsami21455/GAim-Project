@@ -192,3 +192,9 @@ h1 {
     background-color: maroon;
     cursor: crosshair;
 }
+#bomb:hover {
+    background-color: red;
+}
+
+#combo { color: red;    
+}
