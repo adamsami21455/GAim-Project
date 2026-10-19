@@ -60,6 +60,7 @@ function startGame() {
         logoEl.style.display = "none"
         welcomeMessageEl.textContent = "Good luck " + playerName + "!"
     }
+    gameEnded = false
     gameTimer()
     randomizeTargetPosition()
     explodingTarget()
@@ -73,7 +74,7 @@ function addPoints() {
 
 }
 function moveToRandomSquare(targetToMove) {
-    if (gameEnded = true) {
+    if (gameEnded === true) {
         return
     }
 
@@ -144,7 +145,13 @@ function loseGame() {
     }
 }
 function winGame() {
-    if (score >= 1000) {
+    if (score >= 1000 && timer < 120 && gameEnded === false ) {
+        gameEnded = true
+        clearInterval(intervalId)
+        clearInterval(targetIntervalId)
+        clearInterval(explodingIntervalId)
+        timer = 0
+        timerEl.textContent = timer
         alert("game won")
 
 
