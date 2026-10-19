@@ -182,3 +182,13 @@ h1 {
     cursor: crosshair;
 
 }
+
+.bomb {
+ position: absolute;
+    width: 45px;
+    height: 45px;
+    border: 4px solid white;
+    border-radius: 50%;
+    background-color: maroon;
+    cursor: crosshair;
+}

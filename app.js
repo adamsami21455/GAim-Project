@@ -25,10 +25,12 @@ let livesTracker = "❤️❤️❤️"
 let livesArray = ["❤️", "❤️", "❤️"]
 let barriers = 0
 let timer = 0
+let bombCount = 1
 
 let intervalId
 let targetIntervalId
 let explodingIntervalId
+let extraBombIntervalId
 let gameEnded = false
 let personalBest = 0
 
@@ -76,6 +78,9 @@ function startGame() {
         timer = 0
         timerEl.textContent = timer
 
+        bombCount = 1
+        document.querySelectorAll('.extra-bomb').forEach(bomb => {bomb.remove()})
+
         gameEnded = false
 
 
@@ -98,9 +103,7 @@ function moveToRandomSquare(targetToMove) { // this function makes sure that the
     }
 
     const availableSquares = Array.from(squaresEl).filter(square => {
-        return !square.contains(targetEl) &&
-            !square.contains(expTargetEl) &&
-            !square.contains(barrierEl)
+        return square.children.length === 0
     }
     )
     if (availableSquares.length === 0) {
@@ -123,17 +126,48 @@ function randomizeTargetPosition() {
 
 
 function explodingTarget() {
-    explodingIntervalId = setInterval(function explodingTarget() {
+    explodingIntervalId = setInterval(function() {
         moveToRandomSquare (expTargetEl)
     }, 1500)
 
 }
+function createBomb () {
+    const bomb = document.createElement('button')
+    bomb.textContent = 'Bomb'
+    bomb.classList.add('bomb','extra-bomb')
 
+    bomb.addEventListener('click', function () {
+        if (gameEnded === false) {
+            removeLife()
+        
+        }
+    })
+    moveToRandomSquare(bomb)
+
+    extraBombIntervalId = setInterval (function () {
+        moveToRandomSquare (bomb)
+    }, 1500)
+}
+function increaseBombs () {
+    if (timer >= 5 && bombCount < 2) {
+        bombCount = 2
+        createBomb()
+    }
+      if (timer >= 20 && bombCount < 3) {
+        bombCount = 3
+        createBomb()
+    }
+      if (timer >= 30 && bombCount < 4) {
+        bombCount = 4
+        createBomb()
+    }   
+}
 
 function gameTimer() {
     intervalId = setInterval(function gameTimer() {
         timer += 1
         timerEl.textContent = timer
+        increaseBombs()
         loseGame()
     }, 1000)
 
@@ -158,10 +192,9 @@ function loseGame() {
         clearInterval(intervalId)
         clearInterval(targetIntervalId)
         clearInterval(explodingIntervalId)
+        clearInterval(extraBombIntervalId)
         timer = 0
         timerEl.textContent = timer
-        alert("Game Over")
-        returnToStartScreen()
 
         // personal best
         if (score > personalBest){
@@ -180,6 +213,7 @@ function winGame() {
         clearInterval(intervalId)
         clearInterval(targetIntervalId)
         clearInterval(explodingIntervalId)
+        clearInterval (extraBombIntervalId)
         timer = 0
         timerEl.textContent = timer
         alert("game won")
