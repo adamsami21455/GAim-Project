@@ -1,11 +1,6 @@
 console.log('GAim Project')
 
 // Constants
-const targetPosition = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11,
-    12, 13, 14, 15, 16, 17,
-    18, 19, 20, 21, 22, 23,
-    24, 25, 26, 27, 28, 29,
-    30, 31, 32, 33, 34, 35]
 
 const nameInputEl = document.querySelector('#playerName')
 const startButtonEl = document.querySelector('#startButton')
@@ -29,9 +24,11 @@ let livesTracker = "❤️❤️❤️"
 let livesArray = ["❤️", "❤️", "❤️"]
 let barriers = 0
 let timer = 0
-let gameEnded = true
 
-
+let intervalId
+let targetIntervalId
+let explodingIntervalId
+let gameEnded = false
 
 
 
@@ -58,7 +55,6 @@ function startGame() {
         return;
     }
     else {
-        gameEnded = false
         startScreenEl.style.display = "none"
         gameScreenEl.style.display = "flex"
         logoEl.style.display = "none"
@@ -72,37 +68,53 @@ function startGame() {
 function addPoints() {
     score += 100
     scoreDisplayEl.textContent = score
-    
+
     winGame()
 
 }
+function moveToRandomSquare(targetToMove) {
+    const availableSquares = Array.from(squaresEl).filter(square => {
+        return !square.contains(targetEl) &&
+            !square.contains(expTargetEl) &&
+            !square.contains(barrierEl)
+    }
+    )
+    if (availableSquares.length === 0) {
+        return
+
+    }
+    else {
+        const randomIndex = Math.floor((Math.random() * availableSquares.length))
+        availableSquares[randomIndex].appendChild(targetToMove)
+    }
+
+
+}
+
 function randomizeTargetPosition() {
-    setInterval(function randomizeTargetPosition() {
-        // find random position of target
-        const randomIndex = Math.floor((Math.random() * squaresEl.length))
-        const randomSquare = squaresEl[randomIndex]
-        // puts the target in a random square
-        randomSquare.appendChild(targetEl)
+    targetIntervalId = setInterval(function randomizeTargetPosition() {
+        moveToRandomSquare(targetEl)
     }, 1500)
 }
 
+
+function explodingTarget() {
+    explodingIntervalId = setInterval(function explodingTarget() {
+        moveToRandomSquare (expTargetEl)
+    }, 1500)
+
+}
 
 
 function gameTimer() {
-    setInterval(function gameTimer() {
+    intervalId = setInterval(function gameTimer() {
         timer += 1
         timerEl.textContent = timer
+        loseGame()
     }, 1000)
-}
-function explodingTarget() {
-    setInterval(function explodingTarget() {
-        const randomIndex = Math.floor((Math.random() * squaresEl.length))
-        const randomSquare = squaresEl[randomIndex]
-        // puts the target in a random square
-        randomSquare.appendChild(expTargetEl)
-    }, 1500)
 
 }
+
 
 
 function removeLife() {
@@ -110,17 +122,18 @@ function removeLife() {
         livesArray.pop()
         livesEl.textContent = livesArray.join("")
         console.log(`Life lost ${livesArray}`)
-        loseGame()
     }
-  
+
 }
 //function (addBarrier)  {}
 
 function loseGame() {
-      if (livesArray.length === 0 || timer >= 3) {
+    if (livesArray.length === 0 || timer >= 120) {
         alert("Game Over")
-    
-}
+        clearInterval(intervalId)
+        timer = 0
+        timerEl.textContent = timer
+    }
 }
 function winGame() {
     if (score >= 1000) {
@@ -133,9 +146,9 @@ function winGame() {
 
 
 // Event listeners
-startButton.addEventListener('click', startGame)
-target.addEventListener('click', addPoints)
-expTarget.addEventListener('click', removeLife)
+startButtonEl.addEventListener('click', startGame)
+targetEl.addEventListener('click', addPoints)
+expTargetEl.addEventListener('click', removeLife)
 
 
 
