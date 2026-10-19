@@ -18,6 +18,7 @@ const targetEl = document.querySelector('#target')
 const expTargetEl = document.querySelector('#expTarget')
 const barrierEl = document.querySelector('#barrier')
 const timerEl = document.querySelector('#timer')
+const personalBestEl = document.querySelector('#personal-best')
 //variables
 let score = 0
 let livesTracker = "❤️❤️❤️"
@@ -29,6 +30,7 @@ let intervalId
 let targetIntervalId
 let explodingIntervalId
 let gameEnded = false
+let personalBest = 0
 
 
 
@@ -59,8 +61,24 @@ function startGame() {
         gameScreenEl.style.display = "flex"
         logoEl.style.display = "none"
         welcomeMessageEl.textContent = "Good luck " + playerName + "!"
+
+       
     }
-    gameEnded = false
+    // Reset game values
+        
+
+        score = 0
+        scoreDisplayEl.textContent = score
+
+        livesArray = ["❤️", "❤️", "❤️"]
+        livesEl.textContent = livesArray.join("")
+
+        timer = 0
+        timerEl.textContent = timer
+
+        gameEnded = false
+
+
     gameTimer()
     randomizeTargetPosition()
     explodingTarget()
@@ -73,7 +91,8 @@ function addPoints() {
     winGame()
 
 }
-function moveToRandomSquare(targetToMove) {
+
+function moveToRandomSquare(targetToMove) { // this function makes sure that the targets do not over lap
     if (gameEnded === true) {
         return
     }
@@ -134,7 +153,7 @@ function removeLife() {
 //function (addBarrier)  {}
 
 function loseGame() {
-    if ((livesArray.length === 0 || timer >= 120) && gameEnded === false) {
+    if ((livesArray.length === 0 || timer >= 60) && gameEnded === false) {
         gameEnded = true
         clearInterval(intervalId)
         clearInterval(targetIntervalId)
@@ -142,10 +161,12 @@ function loseGame() {
         timer = 0
         timerEl.textContent = timer
         alert("Game Over")
+        returnToStartScreen()
     }
+    
 }
 function winGame() {
-    if (score >= 1000 && timer < 120 && gameEnded === false ) {
+    if (score >= 1000 && timer < 60 && gameEnded === false ) {
         gameEnded = true
         clearInterval(intervalId)
         clearInterval(targetIntervalId)
@@ -153,10 +174,16 @@ function winGame() {
         timer = 0
         timerEl.textContent = timer
         alert("game won")
-
+        returnToStartScreen()
 
     }
 
+}
+
+function returnToStartScreen() {
+    gameScreenEl.style.display = "none"
+    startScreenEl.style.display = "flex"
+    logoEl.style.display = "flex"
 }
 
 
