@@ -63,7 +63,7 @@ function startGame() {
     gameTimer()
     randomizeTargetPosition()
     explodingTarget()
-    // a function call that lods up the exploding target
+    // a function call that loads up the exploding target
 }
 function addPoints() {
     score += 100
@@ -73,6 +73,10 @@ function addPoints() {
 
 }
 function moveToRandomSquare(targetToMove) {
+    if (gameEnded = true) {
+        return
+    }
+
     const availableSquares = Array.from(squaresEl).filter(square => {
         return !square.contains(targetEl) &&
             !square.contains(expTargetEl) &&
@@ -123,16 +127,20 @@ function removeLife() {
         livesEl.textContent = livesArray.join("")
         console.log(`Life lost ${livesArray}`)
     }
+        loseGame()
 
 }
 //function (addBarrier)  {}
 
 function loseGame() {
-    if (livesArray.length === 0 || timer >= 120) {
-        alert("Game Over")
+    if ((livesArray.length === 0 || timer >= 120) && gameEnded === false) {
+        gameEnded = true
         clearInterval(intervalId)
+        clearInterval(targetIntervalId)
+        clearInterval(explodingIntervalId)
         timer = 0
         timerEl.textContent = timer
+        alert("Game Over")
     }
 }
 function winGame() {
