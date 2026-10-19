@@ -162,6 +162,15 @@ function loseGame() {
         timerEl.textContent = timer
         alert("Game Over")
         returnToStartScreen()
+
+        // personal best
+        if (score > personalBest){
+            personalBest = score
+        personalBestEl.textContent = personalBest
+        }
+
+        alert(`Game Over! Your score: ${score}`)
+        returnToStartScreen()
     }
     
 }
