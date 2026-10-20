@@ -22,8 +22,10 @@ This is a point and click game. You click on the targets to get a minmimum amoun
 - Better UI
 - Endless mode
 - Difficulty Levels
+- Leaderboards
 - Add more Powerups
 - Add combo multiplier not just counter
+
 
 ## Screenshots
 ![game menu](image.png)
