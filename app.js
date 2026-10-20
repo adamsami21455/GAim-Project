@@ -27,7 +27,13 @@ const expTargetEl = document.querySelector('#expTarget')
 const barrierEl = document.querySelector('#barrier')
 const timerEl = document.querySelector('#timer')
 const personalBestEl = document.querySelector('#personal-best')
+
+const targetSound = new Audio('./orb.mp3')
+const bombSound = new Audio('./explosion.mp3')
+
+
 //variables
+let playerName = ""
 let score = 0
 let combo = 0
 let livesTracker = "❤️❤️❤️"
@@ -63,7 +69,7 @@ console.log(comboEl)
 
 //functions
 function startGame() {
-    const playerName = nameInputEl.value
+    playerName = nameInputEl.value.trim()
     if (playerName === "") {
         welcomeMessageEl.textContent = "Please Enter Your name!"
         return;
@@ -73,29 +79,28 @@ function startGame() {
         gameScreenEl.style.display = "flex"
         logoEl.style.display = "none"
         resultOverlayEl.style.display = "none"
-        welcomeMessageEl.textContent = "Good luck " + playerName + "!"
 
-       
+
     }
     // Reset game values
-        
 
-        score = 0
-        scoreDisplayEl.textContent = score
 
-        combo = 0
-        comboEl.textContent = combo
+    score = 0
+    scoreDisplayEl.textContent = score
 
-        livesArray = ["❤️", "❤️", "❤️"]
-        livesEl.textContent = livesArray.join("")
+    combo = 0
+    comboEl.textContent = combo
 
-        timer = 0
-        timerEl.textContent = timer
+    livesArray = ["❤️", "❤️", "❤️"]
+    livesEl.textContent = livesArray.join("")
 
-        bombCount = 1
-        document.querySelectorAll('.extra-bomb').forEach(bomb => {bomb.remove()})
+    timer = 0
+    timerEl.textContent = timer
 
-        gameEnded = false
+    bombCount = 1
+    document.querySelectorAll('.extra-bomb').forEach(bomb => { bomb.remove() })
+
+    gameEnded = false
 
 
     gameTimer()
@@ -107,9 +112,10 @@ function addPoints() {
     if (gameEnded === true) {
         return
     }
-
+    targetSound.currentTime = 0
+    targetSound.play()
     score += 100
-    combo +=1
+    combo += 1
     scoreDisplayEl.textContent = score
     comboEl.textContent = combo
 
@@ -121,7 +127,7 @@ function moveToRandomSquare(targetToMove) { // this function makes sure that the
         return
     }
 
-    const availableSquares = Array.from(squaresEl).filter(square => { 
+    const availableSquares = Array.from(squaresEl).filter(square => {
         return !square.contains(targetEl) &&
             !square.contains(expTargetEl)
     }
@@ -146,45 +152,46 @@ function randomizeTargetPosition() {
 
 
 function explodingTarget() {
-    explodingIntervalId = setInterval(function() {
-        moveToRandomSquare (expTargetEl)
+    explodingIntervalId = setInterval(function () {
+        moveToRandomSquare(expTargetEl)
     }, 1500)
 
 }
-function createBomb () {
+function createBomb() {
     const bomb = document.createElement('button')
-    bomb.innerHTML= '<img src= "./bomb.png" alt ="bomb">'
+    bomb.innerHTML = '<img src= "./bomb.png" alt ="bomb">'
     bomb.classList.add('bomb', 'extra-bomb')
 
     bomb.addEventListener('click', function () {
         if (gameEnded === false) {
             removeLife()
-        
+
         }
+
     })
     moveToRandomSquare(bomb)
 
-    extraBombIntervalId = setInterval (function () {
-        moveToRandomSquare (bomb)
+    extraBombIntervalId = setInterval(function () {
+        moveToRandomSquare(bomb)
     }, 1500)
 }
-function increaseBombs () {
+function increaseBombs() {
     if (timer >= 10 && bombCount < 2) {
         bombCount = 2
         createBomb()
     }
-      if (timer >= 20 && bombCount < 3) {
+    if (timer >= 20 && bombCount < 3) {
         bombCount = 3
         createBomb()
     }
-      if (timer >= 30 && bombCount < 4) {
+    if (timer >= 30 && bombCount < 4) {
         bombCount = 4
         createBomb()
-    }   
-          if (timer >= 40 && bombCount < 5) {
+    }
+    if (timer >= 40 && bombCount < 5) {
         bombCount = 5
         createBomb()
-    }   
+    }
 
 }
 
@@ -206,17 +213,20 @@ function removeLife() {
         livesEl.textContent = livesArray.join("")
         console.log(`Life lost ${livesArray}`)
     }
-        loseGame()
+    bombSound.currentTime = 0
+    bombSound.play()
+    loseGame()
 
 }
 //function (addBarrier)  {}
 
 function showResult(won) {
     if (gameEnded) {
-        return 
+        return
     }
-    else {gameEnded = 
-        true
+    else {
+        gameEnded =
+            true
         clearInterval(intervalId)
         clearInterval(targetIntervalId)
         clearInterval(explodingIntervalId)
@@ -225,22 +235,23 @@ function showResult(won) {
     // personal best saved
     if (score > personalBest) {
         personalBest = score
-    localStorage.setItem ('gaimPersonalBest', personalBest)
+        localStorage.setItem('gaimPersonalBest', personalBest)
     }
     //Result panel
+   
     if (won === true) {
-        resultTitleEl.textContent = "You win!"
+        resultTitleEl.textContent = `You win! ${playerName}`
         resultMessageEl.textContent = "Good aim!"
 
     }
     else {
         resultTitleEl.textContent = "Game Over!"
-        resultMessageEl.textContent = "Keep practicing"
+        resultMessageEl.textContent = `Keep practicing ${playerName}`
 
     }
 
     finalScoreEl.textContent = score
-    finalPersonalBestEl.textContent  = personalBest
+    finalPersonalBestEl.textContent = personalBest
     personalBestEl.textContent = personalBest
 
     resultOverlayEl.style.display = "flex"
@@ -249,21 +260,21 @@ function loseGame() {
     if ((livesArray.length === 0 || timer >= 60) && gameEnded === false) {
 
         if (livesArray.length === 0) {
-        showResult(false)
+            showResult(false)
         }
-        else if (score >=5000) {
-        showResult(true)
+        else if (score >= 5000) {
+            showResult(true)
         }
         else {
-        showResult(false)
+            showResult(false)
+        }
+
     }
-    
-}
 }
 
 function returnToStartScreen() {
     gameScreenEl.style.display = "none"
-    resultOverlayEl.style.display ="none"
+    resultOverlayEl.style.display = "none"
     startScreenEl.style.display = "flex"
     logoEl.style.display = "flex"
 
