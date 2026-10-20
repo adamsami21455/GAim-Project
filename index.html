@@ -30,7 +30,7 @@
 <h2 id="playerGreeting"></h2>
 
 <div class ="game-info">
-    <p>Score: <span id="score">0</span>
+    <p>Score: <span id="score">0</span></p>
     <p>Combo: x<span id="combo">0</span></p>
     <p>Lives : <span id= "lives">❤️❤️❤️</span></p>
     <p>Timer : <span id="timer">0</span></p>
@@ -78,7 +78,18 @@
     <div class="sqr" id="35"></div>
     <button id="target">Target</button>
     </section>
-</div>  
+</div> 
+<!-- Displaying result using overlay in HTML  -->
+<div id="resultOverlay" class="result-overlay">
+<div class ="result-box">
+<h2 id="resultTitle"> Game Over! </h2>
+<p id ="resultMessage">Better luck next time!</p>
+<p> Final Score: <span id ="finalScore">0</span></p>
+<p> Personal Best: <span id ="finalPersonalBest">0</span></p>
+<button id ="returnButton">Return to Menu</button>
+</div>
+</div>
+
 
 
 

@@ -7,6 +7,13 @@ const startButtonEl = document.querySelector('#startButton')
 const welcomeMessageEl = document.querySelector('#welcomeMessage')
 const startScreenEl = document.querySelector('#startScreen')
 const gameScreenEl = document.querySelector('#gameScreen')
+const resultOverlayEl = document.querySelector('#resultOverlay')
+const resultTitleEl = document.querySelector('#resultTitle')
+const resultMessageEl = document.querySelector('#resultMessage')
+const finalScoreEl = document.querySelector('#finalScore')
+const finalPersonalBestEl = document.querySelector('#finalPersonalBest')
+const returnButtonEl = document.querySelector('#returnButton')
+
 const squaresEl = document.querySelectorAll('.sqr')
 const logoEl = document.querySelector('#logoContainer')
 const livesEl = document.querySelector('#lives')
@@ -110,8 +117,7 @@ function moveToRandomSquare(targetToMove) { // this function makes sure that the
 
     const availableSquares = Array.from(squaresEl).filter(square => {
         return !square.contains(targetEl) &&
-            !square.contains(expTargetEl) &&
-            !square.contains(barrierEl)
+            !square.contains(expTargetEl)
     }
     )
     if (availableSquares.length === 0) {
@@ -142,7 +148,7 @@ function explodingTarget() {
 function createBomb () {
     const bomb = document.createElement('button')
     bomb.textContent = 'Bomb'
-    bomb.classList.add('bomb','extra-bomb')
+    bomb.classList.add('bomb', 'extra-bomb')
 
     bomb.addEventListener('click', function () {
         if (gameEnded === false) {
@@ -157,7 +163,7 @@ function createBomb () {
     }, 1500)
 }
 function increaseBombs () {
-    if (timer >= 5 && bombCount < 2) {
+    if (timer >= 10 && bombCount < 2) {
         bombCount = 2
         createBomb()
     }
@@ -169,6 +175,11 @@ function increaseBombs () {
         bombCount = 4
         createBomb()
     }   
+          if (timer >= 40 && bombCount < 5) {
+        bombCount = 5
+        createBomb()
+    }   
+
 }
 
 function gameTimer() {
@@ -250,9 +261,3 @@ targetEl.addEventListener('click', addPoints)
 expTargetEl.addEventListener('click', removeLife)
 
 
-
-// 1. Create a new array representing the spots the target can be placed on
-// 2. Create HTML elements that match the number of array positions (same as tictactoe)
-// 3. Cache the html elements (querySelectorAll)
-// 4. Loop through the array to match the html elements text content
-// 5. focus on the randomizer Math.floor(Math.random * array.length)
