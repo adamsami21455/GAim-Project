@@ -121,7 +121,7 @@ function moveToRandomSquare(targetToMove) { // this function makes sure that the
         return
     }
 
-    const availableSquares = Array.from(squaresEl).filter(square => {
+    const availableSquares = Array.from(squaresEl).filter(square => { 
         return !square.contains(targetEl) &&
             !square.contains(expTargetEl)
     }
@@ -153,7 +153,7 @@ function explodingTarget() {
 }
 function createBomb () {
     const bomb = document.createElement('button')
-    bomb.textContent = 'Bomb'
+    bomb.innerHTML= '<img src= "./bomb.png" alt ="bomb">'
     bomb.classList.add('bomb', 'extra-bomb')
 
     bomb.addEventListener('click', function () {
