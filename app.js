@@ -28,8 +28,8 @@ const barrierEl = document.querySelector('#barrier')
 const timerEl = document.querySelector('#timer')
 const personalBestEl = document.querySelector('#personal-best')
 
-const targetSound = new Audio('./orb.mp3')
-const bombSound = new Audio('./explosion.mp3')
+const targetSound = new Audio('./game-files/orb.mp3')
+const bombSound = new Audio('./game-files/explosion.mp3')
 
 
 //variables
@@ -159,7 +159,7 @@ function explodingTarget() {
 }
 function createBomb() {
     const bomb = document.createElement('button')
-    bomb.innerHTML = '<img src= "./bomb.png" alt ="bomb">'
+    bomb.innerHTML = '<img src= "./game-files/bomb.png" alt ="bomb">'
     bomb.classList.add('bomb', 'extra-bomb')
 
     bomb.addEventListener('click', function () {
