@@ -176,19 +176,19 @@ function createBomb() {
     }, 1500)
 }
 function increaseBombs() {
-    if (timer >= 10 && bombCount < 2) {
+    if (timer >= 15 && bombCount < 2) {
         bombCount = 2
         createBomb()
     }
-    if (timer >= 20 && bombCount < 3) {
+    if (timer >= 30 && bombCount < 3) {
         bombCount = 3
         createBomb()
     }
-    if (timer >= 30 && bombCount < 4) {
+    if (timer >= 45 && bombCount < 4) {
         bombCount = 4
         createBomb()
     }
-    if (timer >= 40 && bombCount < 5) {
+    if (timer >= 50 && bombCount < 5) {
         bombCount = 5
         createBomb()
     }

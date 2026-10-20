@@ -1,6 +1,6 @@
 # GAim Project (Aim Game)
 ## Overview
-This is a point and click game. You click on the targets to get a minmimum amount of score before the timer runs out. If you miss a target you lose a life. Once you lose 3 lives the game is over. The game gets progressively harder, there can be up to 4 bombs at a time.
+This is a point and click game. You click on the targets to get a minmimum amount of score (5000) before the timer runs out. If you miss a target you lose a life. Once you lose 3 lives the game is over. The game gets progressively harder, there can be up to 4 bombs at a time.
 
 ## Technologies Used
 1. HTML
@@ -20,6 +20,21 @@ This is a point and click game. You click on the targets to get a minmimum amoun
 
 ## Future Enhancements
 - Better UI
-- Sound Effects
 - Endless mode
 - Difficulty Levels
+- Add more Powerups
+- Add combo multiplier not just counter
+
+## Screenshots
+![game menu](image.png)
+--
+![Gameplay](image-1.png)
+--
+![Game Over Screen](image-2.png)
+--
+## Credits 
+Zaid
+Omar
+W3Schools
+
+
