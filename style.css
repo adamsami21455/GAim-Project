@@ -119,7 +119,7 @@ h1 {
   width: 10%;
   height: 10%;
   aspect-ratio: 1/1;
-  border: 3px solid white;
+  border: none;
   font-size: 64px;
   text-align: center;
 }

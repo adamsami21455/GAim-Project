@@ -75,6 +75,9 @@ function startGame() {
         score = 0
         scoreDisplayEl.textContent = score
 
+        combo = 0
+        comboEl.textContent = combo
+
         livesArray = ["❤️", "❤️", "❤️"]
         livesEl.textContent = livesArray.join("")
 
