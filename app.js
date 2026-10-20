@@ -41,7 +41,7 @@ let targetIntervalId
 let explodingIntervalId
 let extraBombIntervalId
 let gameEnded = false
-let personalBest = 0
+let personalBest = Number(localStorage.getItem('gaimPersonalBest') || 0)
 
 
 
@@ -72,6 +72,7 @@ function startGame() {
         startScreenEl.style.display = "none"
         gameScreenEl.style.display = "flex"
         logoEl.style.display = "none"
+        resultOverlayEl.style.display = "none"
         welcomeMessageEl.textContent = "Good luck " + playerName + "!"
 
        
@@ -103,10 +104,15 @@ function startGame() {
     // a function call that loads up the exploding target
 }
 function addPoints() {
+    if (gameEnded === true) {
+        return
+    }
+
     score += 100
     combo +=1
     scoreDisplayEl.textContent = score
     comboEl.textContent = combo
+
 
 }
 
@@ -205,53 +211,62 @@ function removeLife() {
 }
 //function (addBarrier)  {}
 
-function loseGame() {
-    if ((livesArray.length === 0 || timer >= 60) && gameEnded === false) {
-        gameEnded = true
+function showResult(won) {
+    if (gameEnded) {
+        return 
+    }
+    else {gameEnded = 
+        true
         clearInterval(intervalId)
         clearInterval(targetIntervalId)
         clearInterval(explodingIntervalId)
         clearInterval(extraBombIntervalId)
-        timer = 0
-        timerEl.textContent = timer
+    }
+    // personal best saved
+    if (score > personalBest) {
+        personalBest = score
+    localStorage.setItem ('gaimPersonalBest', personalBest)
+    }
+    //Result panel
+    if (won === true) {
+        resultTitleEl.textContent = "You win!"
+        resultMessageEl.textContent = "Good aim!"
 
-        // personal best
-        if (score > personalBest){
-            personalBest = score
-        personalBestEl.textContent = personalBest
-        }   
+    }
+    else {
+        resultTitleEl.textContent = "Game Over!"
+        resultMessageEl.textContent = "Keep practicing"
+
+    }
+
+    finalScoreEl.textContent = score
+    finalPersonalBestEl.textContent  = personalBest
+    personalBestEl.textContent = personalBest
+
+    resultOverlayEl.style.display = "flex"
+}
+function loseGame() {
+    if ((livesArray.length === 0 || timer >= 60) && gameEnded === false) {
+
         if (livesArray.length === 0) {
-            alert (`Game Over! You lost all your lives. Score ${score}`)
+        showResult(false)
         }
         else if (score >=5000) {
-            alert(`You win! Your score: ${score}`)
+        showResult(true)
         }
-        else {alert(`Time ran out! You needed 5000 points to win. Your score: ${score}`)}
-        
-        returnToStartScreen()
+        else {
+        showResult(false)
     }
     
 }
-function winGame() {
-    if (score >= 5000 && timer < 60 && gameEnded === false ) {
-        gameEnded = true
-        clearInterval(intervalId)
-        clearInterval(targetIntervalId)
-        clearInterval(explodingIntervalId)
-        clearInterval (extraBombIntervalId)
-        timer = 0
-        timerEl.textContent = timer
-        alert("game won")
-        returnToStartScreen()
-
-    }
-
 }
 
 function returnToStartScreen() {
     gameScreenEl.style.display = "none"
+    resultOverlayEl.style.display ="none"
     startScreenEl.style.display = "flex"
     logoEl.style.display = "flex"
+
 }
 
 
@@ -259,5 +274,6 @@ function returnToStartScreen() {
 startButtonEl.addEventListener('click', startGame)
 targetEl.addEventListener('click', addPoints)
 expTargetEl.addEventListener('click', removeLife)
+returnButtonEl.addEventListener('click', returnToStartScreen)
 
 
