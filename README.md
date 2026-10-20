@@ -28,11 +28,11 @@ This is a point and click game. You click on the targets to get a minmimum amoun
 
 
 ## Screenshots
-![game menu](image.png)
+![game menu](./game-files/image.png)
 --
-![Gameplay](image-1.png)
+![Gameplay](./game-files/image-1.png)
 --
-![Game Over Screen](image-2.png)
+![Game Over Screen](./game-files/image-2.png)
 --
 ## Credits 
 Zaid
